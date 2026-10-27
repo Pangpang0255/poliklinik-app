@@ -80,6 +80,12 @@
                 Manajemen Obat
             </a>
 
+            <a href="{{ route('admin.verifikasi.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('admin.verifikasi.*') ? $active : $inactive }}">
+                <i class="fas fa-receipt w-4 text-center"></i>
+                Verifikasi Pembayaran
+            </a>
+
         </div>
         @endif
 
@@ -100,11 +106,22 @@
             </a>
 
             <a href="{{ route('pasien.daftar') }}"
-            class="{{ ($baseLink ?? '') . (request()->routeIs('pasien.daftar') ? $active : $inactive) }}">
-                <i class="fas fa-house-medical w-4 text-center"></i>
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.daftar') ? $active : $inactive }}">
+                <i class="fas fa-calendar-plus w-4 text-center"></i>
                 Pendaftaran Periksa
             </a>
 
+            <a href="{{ route('pasien.pembayaran.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.pembayaran.*') ? $active : $inactive }}">
+                <i class="fas fa-money-bill-wave w-4 text-center"></i>
+                Pembayaran
+            </a>
+
+            <a href="{{ route('pasien.riwayat.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.riwayat.*') ? $active : $inactive }}">
+                <i class="fas fa-clock-rotate-left w-4 text-center"></i>
+                Riwayat Pendaftaran
+            </a>
 
         </div>
         @endif
@@ -138,13 +155,37 @@
             </a>
 
              <a href="{{ route('riwayat-pasien.index') }}"
-            class="{{ $baseLink }} {{ request()->routeIs('riwayat-pasien.*') ? $active : $inactive }}">
+                class="{{ $baseLink }} {{ request()->routeIs('riwayat-pasien.*') ? $active : $inactive }}">
                 <i class="fas fa-clock-rotate-left w-4 text-center"></i>
                 Riwayat Pasien
             </a>
 
         </div>
         @endif
+
+
+        {{-- ================= PROFIL (semua role) ================= --}}
+        <div class="border-t border-white/10 mt-4 pt-4 space-y-1">
+            <p class="text-xs uppercase tracking-widest text-slate-500 px-3 mb-2">Akun</p>
+
+            <a href="{{ route('notifications.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('notifications.*') ? $active : $inactive }}">
+                <i class="fas fa-bell w-4 text-center"></i>
+                Notifikasi
+                @php $unread = auth()->user()?->appNotifications()->where('is_read', false)->count() ?? 0; @endphp
+                @if($unread > 0)
+                <span class="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold">
+                    {{ $unread > 9 ? '9+' : $unread }}
+                </span>
+                @endif
+            </a>
+
+            <a href="{{ route('profile.password') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('profile.*') ? $active : $inactive }}">
+                <i class="fas fa-lock w-4 text-center"></i>
+                Ganti Password
+            </a>
+        </div>
 
     </div>
 
@@ -160,5 +201,6 @@
             </button>
         </form>
     </div>
+
 
 </aside>

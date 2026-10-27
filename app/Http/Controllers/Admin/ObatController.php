@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ObatExport;
 use App\Http\Controllers\Controller;
 use App\Models\Obat;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ObatController extends Controller
 {
@@ -76,5 +78,10 @@ public function update(Request $request, string $id)
             ->route('obat.index')
             ->with('message', 'Data Obat berhasil di Hapus')
             ->with('type', 'success');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ObatExport(), 'data-obat.xlsx');
     }
 }

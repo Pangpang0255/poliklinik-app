@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\PasienExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PasienController extends Controller
 {
@@ -87,5 +89,10 @@ class PasienController extends Controller
             ->route('pasien.index')
             ->with('message', 'Data Pasien berhasil dihapus')
             ->with('type', 'success');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PasienExport(), 'data-pasien.xlsx');
     }
 }

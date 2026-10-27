@@ -29,4 +29,9 @@ class DaftarPoli extends Model
     {
         return $this->hasMany(Periksa::class, 'id_daftar_poli');
     }
+
+    public function latestPeriksa()
+    {
+        return $this->hasOne(Periksa::class, 'id_daftar_poli')->latestOfMany();
+    }
 }
